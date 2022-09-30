@@ -3,10 +3,19 @@ import Display from "components/DIsplay/Display"
 import { useState } from 'react'
 
 const App = () => {
-    const [ counter, setCounter ] = useState(0)
-  
-    const changeCount = (delta) => setCounter(counter + delta)
+    
+    const [ counter, setCounter ] = useState(JSON.parse(localStorage.getItem("counter")))
+    
+    
 
+    const changeCount = (delta) => {
+      let counter1=counter+delta
+      setCounter(counter1)
+      localStorage.setItem("counter", JSON.stringify(counter1))
+      //console.log(counter1)
+    }
+
+    
     return (
       <div>
         <Display counter={counter}/>
