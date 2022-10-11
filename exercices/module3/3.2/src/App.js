@@ -3,7 +3,7 @@ const Course = ({ course }) => (
     <h1> {course.name}</h1>
     <ul>
       {course.parts.map((cour) => (
-        <li>
+        <li key={cour.id}>
           {cour.name} {cour.exercises}
         </li>
       ))}
