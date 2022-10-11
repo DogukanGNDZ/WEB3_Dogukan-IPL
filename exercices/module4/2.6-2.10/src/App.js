@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const App = () => {
   const [persons, setPersons] = useState([
-    { name: "Arto Hellas", phone: 468584635 },
+    { name: "Arto Hellas", number: 468584635 },
   ]);
   const [newName, setNewName] = useState("");
   const [newPhone, setNewPhone] = useState("");
@@ -21,7 +22,7 @@ const App = () => {
     event.preventDefault();
     const nameObject = {
       name: newName,
-      phone: newPhone,
+      number: newPhone,
     };
 
     let exist = false;
@@ -37,6 +38,11 @@ const App = () => {
       alert(nameObject.name + " already added");
     }
   };
+  useEffect(() => {
+    axios.get("http://localhost:3001/persons").then((response) => {
+      setPersons(response.data);
+    });
+  }, []);
 
   return (
     <div>
@@ -55,7 +61,7 @@ const App = () => {
       <ul>
         {persons.map((person) => (
           <p>
-            {person.name} {person.phone}
+            {person.name} {person.number}
           </p>
         ))}
       </ul>
