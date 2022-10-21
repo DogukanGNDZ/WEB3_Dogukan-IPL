@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import PhoneService from "./services/phonebook";
+import phonebook from "./services/phonebook";
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -31,13 +33,16 @@ const App = () => {
     });
 
     if (!exist) {
-      setPersons(persons.concat(nameObject));
-      setNewName("");
-      setNewPhone("");
+      PhoneService.create(nameObject).then((response) => {
+        setPersons(persons.concat(response));
+        setNewName("");
+        setNewPhone("");
+      });
     } else {
       alert(nameObject.name + " already added");
     }
   };
+
   useEffect(() => {
     axios.get("http://localhost:3001/persons").then((response) => {
       setPersons(response.data);
